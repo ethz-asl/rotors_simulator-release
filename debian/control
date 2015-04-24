@@ -1,0 +1,12 @@
+Source: ros-indigo-rotors-evaluation
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin
+Homepage: https://github.com/ethz-asl/rotors_simulator/wiki
+Standards-Version: 3.9.2
+
+Package: ros-indigo-rotors-evaluation
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, 
+Description: The dataset evaluation package for the RotorS simulator.
