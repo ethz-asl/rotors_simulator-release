@@ -1,0 +1,13 @@
+ros-indigo-rotors-joy-interface (1.1.1-0saucy) saucy; urgency=high
+
+
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Thu, 23 Apr 2015 22:00:00 -0000
+
+ros-indigo-rotors-joy-interface (1.1.0-0saucy) saucy; urgency=high
+
+  * initial Ubuntu package release
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Thu, 23 Apr 2015 22:00:00 -0000
+
+
