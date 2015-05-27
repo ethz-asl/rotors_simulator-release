@@ -1,0 +1,19 @@
+ros-indigo-rotors-control (1.1.2-0saucy) saucy; urgency=high
+
+  * added nav_msgs dependency and fixed rotors_evaluation's setup.py
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Tue, 26 May 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.1-0saucy) saucy; urgency=high
+
+
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Thu, 23 Apr 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.0-0saucy) saucy; urgency=high
+
+  * initial Ubuntu package release
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Thu, 23 Apr 2015 22:00:00 -0000
+
+
