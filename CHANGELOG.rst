@@ -2,6 +2,10 @@
 Changelog for package rotors_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.2 (2015-05-27)
+------------------
+* added nav_msgs dependency and fixed rotors_evaluation's setup.py
+
 1.1.1 (2015-04-24)
 ------------------
 
