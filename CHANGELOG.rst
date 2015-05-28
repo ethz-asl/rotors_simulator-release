@@ -2,6 +2,9 @@
 Changelog for package rotors_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.3 (2015-05-28)
+------------------
+
 1.1.2 (2015-05-27)
 ------------------
 * added max depth cam range as param
