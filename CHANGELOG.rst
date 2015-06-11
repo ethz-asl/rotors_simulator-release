@@ -2,6 +2,9 @@
 Changelog for package rotors_gazebo_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.6 (2015-06-11)
+------------------
+
 1.1.5 (2015-06-09)
 ------------------
 * added install targets
