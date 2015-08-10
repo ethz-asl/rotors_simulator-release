@@ -1,0 +1,57 @@
+ros-indigo-rotors-control (2.0.1-0saucy) saucy; urgency=high
+
+
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Sun, 09 Aug 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (2.0.0-0saucy) saucy; urgency=high
+
+  * Converted to new mav_comm messages, including new MultiDOFJointTrajectory and PoseStamped as waypoints.
+  * Added subscriber for MultiDOFJointTrajectory messages and extended waypoint_publisher_file to test it. resolves #243 <https://github.com/ethz-asl/rotors_simulator/issues/243>
+  * Contributors: Helen Oleynikova, Markus Achtelik
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Sat, 08 Aug 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.6-0saucy) saucy; urgency=high
+
+
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Wed, 10 Jun 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.5-0saucy) saucy; urgency=high
+
+  * added install targets
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Mon, 08 Jun 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.4-0saucy) saucy; urgency=high
+
+
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Wed, 27 May 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.3-0saucy) saucy; urgency=high
+
+  * added installation of controller libraries
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Wed, 27 May 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.2-0saucy) saucy; urgency=high
+
+  * added nav_msgs dependency and fixed rotors_evaluation's setup.py
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Tue, 26 May 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.1-0saucy) saucy; urgency=high
+
+
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Thu, 23 Apr 2015 22:00:00 -0000
+
+ros-indigo-rotors-control (1.1.0-0saucy) saucy; urgency=high
+
+  * initial Ubuntu package release
+
+ -- Fadri Furrer <fadri.furrer@mavt.ethz.ch>  Thu, 23 Apr 2015 22:00:00 -0000
+
+
