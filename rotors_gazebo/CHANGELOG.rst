@@ -2,6 +2,11 @@
 Changelog for package rotors_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.1 (2015-08-10)
+------------------
+* fixed the bag plugin and the evaluation
+* Contributors: Fadri Furrer
+
 2.0.0 (2015-08-09)
 ------------------
 * Change to use the new datatypes defined in mav_comm.
