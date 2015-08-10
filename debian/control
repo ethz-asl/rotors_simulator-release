@@ -1,0 +1,12 @@
+Source: ros-indigo-rotors-joy-interface
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin, ros-indigo-geometry-msgs, ros-indigo-mav-msgs, ros-indigo-roscpp, ros-indigo-sensor-msgs, ros-indigo-trajectory-msgs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-indigo-rotors-joy-interface
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-geometry-msgs, ros-indigo-mav-msgs, ros-indigo-roscpp, ros-indigo-sensor-msgs, ros-indigo-trajectory-msgs
+Description: The rotors_joy_interface package to control MAVs with a joystick
