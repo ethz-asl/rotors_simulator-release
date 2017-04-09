@@ -1,6 +1,10 @@
+<?xml version="1.0" ?>
 <sdf version='1.4'>
   <world name='default'>
-    <plugin name="gazebo_octomap" filename="librotors_gazebo_octomap_plugin.so"/>
+    <plugin name='gazebo_octomap' filename='librotors_gazebo_octomap_plugin.so'>
+      <octomapPubTopic>world/octomap</octomapPubTopic>
+      <octomapServiceName>world/get_octomap</octomapServiceName>
+    </plugin>
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
@@ -40,9 +44,9 @@
     </scene>
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
-      <latitude_deg>0</latitude_deg>
-      <longitude_deg>0</longitude_deg>
-      <elevation>0</elevation>
+      <latitude_deg>47.3667</latitude_deg>
+      <longitude_deg>8.5500</longitude_deg>
+      <elevation>500.0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <model name='asphalt_plane'>
