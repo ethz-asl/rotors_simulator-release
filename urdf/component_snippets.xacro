@@ -24,7 +24,7 @@
 
   <!-- Macro to add logging to a bag file. -->
   <xacro:macro name="bag_plugin_macro"
-    params="namespace bag_file rotor_velocity_slowdown_sim">
+    params="namespace bag_file rotor_velocity_slowdown_sim wait_to_record_bag">
     <gazebo>
       <plugin filename="librotors_gazebo_bag_plugin.so" name="rosbag">
         <robotNamespace>${namespace}</robotNamespace>
@@ -32,6 +32,7 @@
         <linkName>${namespace}/base_link</linkName>
         <frameId>${namespace}/base_link</frameId>
         <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
+	<waitToRecordBag>${wait_to_record_bag}</waitToRecordBag>
       </plugin>
     </gazebo>
   </xacro:macro>
@@ -67,6 +68,12 @@
       <xacro:insert_block name="origin" />
       <parent link="${parent_link}" />
       <child link="${namespace}/camera_${camera_suffix}_link" />
+    </joint>
+    <link name="${namespace}/camera_${camera_suffix}_optical_link" />
+    <joint name="${namespace}/camera_${camera_suffix}_optical_joint" type="fixed" >
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+      <parent link="${namespace}/camera_${camera_suffix}_link" />
+      <child link="${namespace}/camera_${camera_suffix}_optical_link" />
     </joint>
     <gazebo reference="${namespace}/camera_${camera_suffix}_link">
       <sensor type="camera" name="${namespace}_camera_${camera_suffix}">
@@ -193,6 +200,13 @@
       <xacro:insert_block name="geometry" />
     </xacro:camera_joint_macro>
 
+    <link name="${namespace}/camera_left_optical_link" />
+    <joint name="${namespace}/camera_left_optical_joint" type="fixed" >
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
+      <parent link="${namespace}/camera_left_link" />
+      <child link="${namespace}/camera_left_optical_link" />
+    </joint>
+
     <!-- Both cameras in the pair are anchored off the left camera frame. -->
     <gazebo reference="${namespace}/camera_left_link">
       <sensor type="multicamera" name="${namespace}_stereo_camera">
@@ -247,11 +261,55 @@
       </plugin>
     </gazebo>
   </xacro:macro>
+  
+  <!-- =============================================================== -->
+  <!-- ==================== ROS INTERFACE MACRO ====================== -->
+  <!-- =============================================================== -->
+  <!-- <xacro:macro 
+  		name="ros_interface_plugin_macro"
+  		params="namespace">
+    <gazebo>
+      <plugin name="ros_interface_plugin" filename="librotors_gazebo_ros_interface_plugin.so">
+        <robotNamespace>${namespace}</robotNamespace>
+      </plugin>
+    </gazebo>
+  </xacro:macro>-->
+
+  <!-- =============================================================== -->
+  <!-- ================== MAVLINK INTERFACE MACRO ==================== -->
+  <!-- =============================================================== -->
+  <xacro:macro name="mavlink_interface_macro" 
+    params="namespace mavlink_sub_topic imu_sub_topic mavlink_pub_topic 
+      motors_speeds_pub_topic gps_update_freq rotor_count reference_magnetic_field_north 
+      reference_magnetic_field_east reference_magnetic_field_down reference_latitude 
+      reference_longitude reference_altitude">
+    <gazebo>
+      <plugin name="mavlink_interface" filename="librotors_gazebo_mavlink_interface.so">
+        <robotNamespace>${namespace}</robotNamespace>
+	<mavlinkControlSubTopic>${mavlink_sub_topic}</mavlinkControlSubTopic>
+        <imuSubTopic>${imu_sub_topic}</imuSubTopic>
+        <mavlinkHilSensorPubTopic>${mavlink_pub_topic}</mavlinkHilSensorPubTopic>
+	<motorSpeedsPubTopic>${motors_speeds_pub_topic}</motorSpeedsPubTopic>
+	<gpsUpdateFreq>${gps_update_freq}</gpsUpdateFreq> <!-- Frequency of HIL GPS messages [Hz] -->
+	<rotorCount>${rotor_count}</rotorCount>
+        <!-- [Gauss] Below are the North, East, and Down components of the Earth's magnetic field at the reference location.
+             The default reference location is Zurich (lat=+47.3667degN, lon=+8.5500degE, h=+500m, WGS84).
+	     You can obtain the magnetic field strength for your location using the World Magnetic Model: 
+             https://www.ngdc.noaa.gov/geomag/WMM/calculators.shtml -->
+        <referenceMagNorth>${reference_magnetic_field_north}</referenceMagNorth>
+        <referenceMagEast>${reference_magnetic_field_east}</referenceMagEast>
+        <referenceMagDown>${reference_magnetic_field_down}</referenceMagDown>
+	<referenceLatitude>${reference_latitude}</referenceLatitude> <!-- the initial latitude [degrees [-90, 90]] -->
+        <referenceLongitude>${reference_longitude}</referenceLongitude> <!-- the initial longitude [degrees [-180, 180]] -->
+        <referenceAltitude>${reference_altitude}</referenceAltitude> <!-- the initial altitude [m] -->
+      </plugin>
+    </gazebo>
+  </xacro:macro>
 
   <!-- Macro to add an IMU. -->
   <xacro:macro name="imu_plugin_macro"
     params="namespace imu_suffix parent_link imu_topic
-      mass_imu_sensor gyroscope_noise_density gyroscopoe_random_walk
+      mass_imu_sensor gyroscope_noise_density gyroscope_random_walk
       gyroscope_bias_correlation_time gyroscope_turn_on_bias_sigma
       accelerometer_noise_density accelerometer_random_walk
       accelerometer_bias_correlation_time accelerometer_turn_on_bias_sigma
@@ -279,7 +337,7 @@
         <linkName>${namespace}/imu${imu_suffix}_link</linkName> <!-- (string, required): name of the body which holds the IMU sensor -->
         <imuTopic>${imu_topic}</imuTopic> <!-- (string): name of the sensor output topic and prefix of service names (defaults to imu) -->
         <gyroscopeNoiseDensity>${gyroscope_noise_density}</gyroscopeNoiseDensity> <!-- Gyroscope noise density (two-sided spectrum) [rad/s/sqrt(Hz)] -->
-        <gyroscopeRandomWalk>${gyroscopoe_random_walk}</gyroscopeRandomWalk> <!-- Gyroscope bias random walk [rad/s/s/sqrt(Hz)] -->
+        <gyroscopeRandomWalk>${gyroscope_random_walk}</gyroscopeRandomWalk> <!-- Gyroscope bias random walk [rad/s/s/sqrt(Hz)] -->
         <gyroscopeBiasCorrelationTime>${gyroscope_bias_correlation_time}</gyroscopeBiasCorrelationTime> <!-- Gyroscope bias correlation time constant [s] -->
         <gyroscopeTurnOnBiasSigma>${gyroscope_turn_on_bias_sigma}</gyroscopeTurnOnBiasSigma> <!-- Gyroscope turn on bias standard deviation [rad/s] -->
         <accelerometerNoiseDensity>${accelerometer_noise_density}</accelerometerNoiseDensity> <!-- Accelerometer noise density (two-sided spectrum) [m/s^2/sqrt(Hz)] -->
@@ -290,11 +348,11 @@
     </gazebo>
   </xacro:macro>
 
-<!-- Macro to add a generic odometry sensor. -->
+  <!-- Macro to add a generic odometry sensor. -->
   <xacro:macro name="odometry_plugin_macro"
     params="
       namespace odometry_sensor_suffix parent_link pose_topic pose_with_covariance_topic
-      position_topic transform_topic odometry_topic parent_frame_id
+      position_topic transform_topic odometry_topic parent_frame_id child_frame_id
       mass_odometry_sensor measurement_divisor measurement_delay unknown_delay
       noise_normal_position noise_normal_quaternion noise_normal_linear_velocity
       noise_normal_angular_velocity noise_uniform_position
@@ -325,6 +383,7 @@
         <transformTopic>${transform_topic}</transformTopic>
         <odometryTopic>${odometry_topic}</odometryTopic>
         <parentFrameId>${parent_frame_id}</parentFrameId> <!-- Use the scoped link name here. e.g. Model::link. -->
+        <childFrameId>${child_frame_id}</childFrameId>
         <measurementDivisor>${measurement_divisor}</measurementDivisor> <!-- only every (seq % measurementDivisor) == 0 measurement is published [int] -->
         <measurementDelay>${measurement_delay}</measurementDelay> <!-- time that measurement gets held back before it's published in [simulation cycles (int)] -->
         <unknownDelay>${unknown_delay}</unknownDelay> <!-- additional delay, that just gets added to the timestamp [s] -->
@@ -344,11 +403,127 @@
     </gazebo>
   </xacro:macro>
 
+  <!-- Macro to add a GPS sensor. -->
+  <xacro:macro name="gps_plugin_macro"
+    params="namespace gps_suffix parent_link gps_topic ground_speed_topic
+      mass_gps_sensor horizontal_pos_std_dev vertical_pos_std_dev
+      horizontal_vel_std_dev vertical_vel_std_dev *inertia *origin">
+    <!-- GPS link -->
+    <link name="${namespace}/gps${gps_suffix}_link">
+      <inertial>
+        <xacro:insert_block name="inertia" />
+        <mass value="${mass_gps_sensor}" />  <!-- [kg] -->
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </inertial>
+    </link>
+    <!-- GPS joint -->
+    <joint name="${namespace}/gps${gps_suffix}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent_link}" />
+      <child link="${namespace}/gps${gps_suffix}_link" />
+      <limit upper="0" lower="0" effort="0" velocity="0" />
+    </joint>
+    <gazebo reference="${namespace}/gps${gps_suffix}_link">
+      <sensor type="gps" name="${namespace}_gps${gps_suffix}">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>0</visualize>
+        <always_on>1</always_on>
+        <update_rate>5</update_rate>
+        <gps>
+          <position_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>${horizontal_pos_std_dev}</stddev>
+                <bias_mean>0.0</bias_mean>
+                <bias_stddev>0.0</bias_stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>${vertical_pos_std_dev}</stddev>
+                <bias_mean>0.0</bias_mean>
+                <bias_stddev>0.0</bias_stddev>
+              </noise>
+            </vertical>
+          </position_sensing>
+          <velocity_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>${horizontal_vel_std_dev}</stddev>
+                <bias_mean>0.0</bias_mean>
+                <bias_stddev>0.0</bias_stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>${vertical_vel_std_dev}</stddev>
+                <bias_mean>0.0</bias_mean>
+                <bias_stddev>0.0</bias_stddev>
+              </noise>
+            </vertical>
+          </velocity_sensing>
+        </gps>
+        <plugin filename="librotors_gazebo_gps_plugin.so" name="rotors_gazebo_gps${gps_suffix}_plugin">
+          <robotNamespace>${namespace}</robotNamespace> <!-- (string, required): ros namespace in which the messages are published -->
+          <linkName>${namespace}/gps${gps_suffix}_link</linkName> <!-- (string, required): name of the body which holds the GPS sensor -->
+          <gpsTopic>${gps_topic}</gpsTopic> <!-- (string): name of the sensor output topic and prefix of service names (defaults to 'gps') -->
+          <groundSpeedTopic>${ground_speed_topic}</groundSpeedTopic> <!-- (string): name of the ground speed output topic (defaults to 'ground_speed') -->
+          <horPosStdDev>${horizontal_pos_std_dev}</horPosStdDev> <!-- standard deviation for horizontal position noise [m] -->
+          <verPosStdDev>${vertical_pos_std_dev}</verPosStdDev> <!-- standard deviation for vertical position noise [m] -->
+          <horVelStdDev>${horizontal_vel_std_dev}</horVelStdDev> <!-- standard deviation for horizontal speed noise [m/s] -->
+          <verVelStdDev>${vertical_vel_std_dev}</verVelStdDev> <!-- standard deviation for vertical speed noise [m/s] -->
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Macro to add a magnetometer. -->
+  <xacro:macro name="magnetometer_plugin_macro"
+    params="namespace magnetometer_suffix parent_link magnetometer_topic
+      mass_magnetometer_sensor ref_mag_north ref_mag_east ref_mag_down 
+      noise_normal noise_uniform_initial_bias *inertia *origin">
+    <!-- Magnetometer link -->
+    <link name="${namespace}/magnetometer${magnetometer_suffix}_link">
+      <inertial>
+        <xacro:insert_block name="inertia" />
+        <mass value="${mass_magnetometer_sensor}" />  <!-- [kg] -->
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </inertial>
+    </link>
+    <!-- Magnetometer joint -->
+    <joint name="${namespace}/magnetometer${magnetometer_suffix}_joint" type="revolute">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent_link}" />
+      <child link="${namespace}/magnetometer${magnetometer_suffix}_link" />
+      <limit upper="0" lower="0" effort="0" velocity="0" />
+    </joint>
+    <gazebo>
+      <plugin filename="librotors_gazebo_magnetometer_plugin.so" name="rotors_gazebo_magnetometer${magnetometer_suffix}_plugin">
+        <robotNamespace>${namespace}</robotNamespace> <!-- (string, required): ros namespace in which the messages are published -->
+        <linkName>${namespace}/magnetometer${magnetometer_suffix}_link</linkName> <!-- (string, required): name of the body which holds the magnetometer -->
+        <magnetometerTopic>${magnetometer_topic}</magnetometerTopic> <!-- (string): name of the sensor output topic and prefix of service names (defaults to 'magnetic_field') -->
+        <!-- [Tesla] Below is the reference Earth's magnetic field at the reference location in NED frame.
+             The default reference location is Zurich (lat=+47.3667degN, lon=+8.5500degE, h=+500m, WGS84).
+	     You can obtain the magnetic field strength for your location using the World Magnetic Model: 
+             http://www.ngdc.noaa.gov/geomag-web/#igrfwmm -->
+        <refMagNorth>${ref_mag_north}</refMagNorth>
+        <refMagEast>${ref_mag_east}</refMagEast>
+        <refMagDown>${ref_mag_down}</refMagDown>
+        <noiseNormal>${noise_normal}</noiseNormal> <!-- standard deviation of additive white gaussian noise [Tesla] -->
+        <noiseUniformInitialBias>${noise_uniform_initial_bias}</noiseUniformInitialBias> <!-- symmetric bounds of uniform noise for initial sensor bias [Tesla] -->
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
   <!-- Macro to add the wind plugin. -->
   <xacro:macro name="wind_plugin_macro"
     params="namespace xyz_offset wind_direction wind_force_mean
       wind_gust_direction wind_gust_duration wind_gust_start
-      wind_gust_force_mean">
+      wind_gust_force_mean wind_speed_mean">
     <gazebo>
       <plugin filename="librotors_gazebo_wind_plugin.so" name="wind_plugin">
         <frameId>world</frameId>
@@ -361,6 +536,7 @@
         <windGustDuration>${wind_gust_duration}</windGustDuration> <!-- [s] -->
         <windGustStart>${wind_gust_start}</windGustStart> <!-- [s] -->
         <windGustForceMean>${wind_gust_force_mean}</windGustForceMean> <!-- [N] -->
+        <windSpeedMean>${wind_speed_mean}</windSpeedMean> <!-- [m/s] -->
       </plugin>
     </gazebo>
   </xacro:macro>
@@ -506,7 +682,7 @@
         <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
       </inertial>
     </link>
-    <joint name="{namespace}_vi_sensor_joint" type="fixed">
+    <joint name="${namespace}_vi_sensor_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent_link}" />
       <child link="${namespace}/vi_sensor_link" />
@@ -543,6 +719,7 @@
         transform_topic="transform"
         odometry_topic="odometry"
         parent_frame_id="world"
+        child_frame_id="${namespace}/base_link"
         mass_odometry_sensor="0.00001"
         measurement_divisor="1"
         measurement_delay="0"
@@ -571,7 +748,7 @@
       imu_topic="imu"
       mass_imu_sensor="0.015"
       gyroscope_noise_density="0.0003394"
-      gyroscopoe_random_walk="0.000038785"
+      gyroscope_random_walk="0.000038785"
       gyroscope_bias_correlation_time="1000.0"
       gyroscope_turn_on_bias_sigma="0.0087"
       accelerometer_noise_density="0.004"
@@ -592,7 +769,7 @@
       imu_topic="ground_truth/imu"
       mass_imu_sensor="0.00001"
       gyroscope_noise_density="0.0"
-      gyroscopoe_random_walk="0.0"
+      gyroscope_random_walk="0.0"
       gyroscope_bias_correlation_time="1000.0"
       gyroscope_turn_on_bias_sigma="0.0"
       accelerometer_noise_density="0.0"
@@ -605,15 +782,16 @@
 
     <!-- Mount a generic odometry sensor providing ground truth. -->
     <xacro:odometry_plugin_macro
-      namespace="${namespace}/ground_truth"
+      namespace="${namespace}"
       odometry_sensor_suffix="gt"
       parent_link="${parent_link}"
-      pose_topic="pose"
-      pose_with_covariance_topic="pose_with_covariance"
-      position_topic="position"
-      transform_topic="transform"
-      odometry_topic="odometry"
+      pose_topic="ground_truth/pose"
+      pose_with_covariance_topic="ground_truth/pose_with_covariance"
+      position_topic="ground_truth/position"
+      transform_topic="ground_truth/transform"
+      odometry_topic="ground_truth/odometry"
       parent_frame_id="world"
+      child_frame_id="${namespace}/base_link"
       mass_odometry_sensor="0.00001"
       measurement_divisor="1"
       measurement_delay="0"
@@ -643,7 +821,7 @@
       imu_topic="imu"
       mass_imu_sensor="0.015"
       gyroscope_noise_density="0.0003394"
-      gyroscopoe_random_walk="0.000038785"
+      gyroscope_random_walk="0.000038785"
       gyroscope_bias_correlation_time="1000.0"
       gyroscope_turn_on_bias_sigma="0.0087"
       accelerometer_noise_density="0.004"
@@ -653,6 +831,60 @@
       <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:imu_plugin_macro>
+  </xacro:macro>
+
+  <xacro:macro name="default_gps" params="namespace parent_link">
+    <!-- Default GPS. -->
+    <xacro:gps_plugin_macro
+      namespace="${namespace}"
+      gps_suffix=""
+      parent_link="${parent_link}"
+      gps_topic="gps"
+      ground_speed_topic="ground_speed"
+      mass_gps_sensor="0.015"
+      horizontal_pos_std_dev="3.0"
+      vertical_pos_std_dev="6.0"
+      horizontal_vel_std_dev="0.1"
+      vertical_vel_std_dev="0.1">
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:gps_plugin_macro>
+  </xacro:macro>
+
+  <xacro:macro name="default_magnetometer" params="namespace parent_link">
+    <!-- ADIS16448 Magnetometer. -->
+    <xacro:magnetometer_plugin_macro
+      namespace="${namespace}"
+      magnetometer_suffix=""
+      parent_link="${parent_link}"
+      magnetometer_topic="magnetic_field"
+      mass_magnetometer_sensor="0.015"
+      ref_mag_north="0.000021493"
+      ref_mag_east="0.000000815"
+      ref_mag_down="0.000042795"
+      noise_normal="0.000000080 0.000000080 0.000000080"
+      noise_uniform_initial_bias="0.000000400 0.000000400 0.000000400">
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </xacro:magnetometer_plugin_macro>
+  </xacro:macro>
+
+  <xacro:macro name="default_mavlink_interface" params="namespace imu_sub_topic rotor_count">
+    <xacro:mavlink_interface_macro
+      namespace="${namespace}"
+      mavlink_sub_topic="/mavlink/from"
+      imu_sub_topic="${imu_sub_topic}"
+      mavlink_pub_topic="/mavlink/to"
+      motors_speeds_pub_topic="gazebo/command/motor_speed"
+      gps_update_freq="5.0"
+      rotor_count="${rotor_count}"
+      reference_magnetic_field_north="0.21475"
+      reference_magnetic_field_east="0.00797"
+      reference_magnetic_field_down="0.42817"
+      reference_latitude="47.3667"
+      reference_longitude="8.5500"
+      reference_altitude="500.0">
+    </xacro:mavlink_interface_macro>
   </xacro:macro>
 
 </robot>
