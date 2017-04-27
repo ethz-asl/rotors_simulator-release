@@ -1,0 +1,12 @@
+Source: ros-indigo-rotors-simulator
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-catkin
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-indigo-rotors-simulator
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-rotors-comm, ros-indigo-rotors-control, ros-indigo-rotors-description, ros-indigo-rotors-evaluation, ros-indigo-rotors-gazebo, ros-indigo-rotors-gazebo-plugins, ros-indigo-rotors-hil-interface, ros-indigo-rotors-joy-interface, ros-indigo-rqt-rotors
+Description: RotorS is a MAV gazebo simulator.
