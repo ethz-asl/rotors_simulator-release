@@ -1,0 +1,12 @@
+Source: ros-jade-rotors-evaluation
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin, ros-jade-rospy
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rotors-evaluation
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-rospy
+Description: The dataset evaluation package for the RotorS simulator.
