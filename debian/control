@@ -1,0 +1,12 @@
+Source: ros-jade-rqt-rotors
+Section: misc
+Priority: extra
+Maintainer: Pavel Vechersky <pavelv@student.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin, ros-jade-mavros-msgs, ros-jade-rospy, ros-jade-rqt-gui, ros-jade-rqt-gui-py
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rqt-rotors
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-mavros-msgs, ros-jade-rospy, ros-jade-rqt-gui, ros-jade-rqt-gui-py
+Description: The rqt_rotors package
