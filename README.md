@@ -1,3 +1,36 @@
+## rotors_simulator (jade) - 3.0.0-0
+
+The packages in the `rotors_simulator` repository were released into the `jade` distro by running `/usr/bin/bloom-release --rosdistro jade --track jade rotors_simulator --edit` on `Fri, 28 Apr 2017 00:37:54 -0000`
+
+These packages were released:
+- `rotors_comm`
+- `rotors_control`
+- `rotors_description`
+- `rotors_evaluation`
+- `rotors_gazebo`
+- `rotors_gazebo_plugins`
+- `rotors_hil_interface`
+- `rotors_joy_interface`
+- `rotors_simulator`
+- `rqt_rotors`
+
+Version of package(s) in repository `rotors_simulator`:
+
+- upstream repository: https://github.com/ethz-asl/rotors_simulator.git
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `3.0.0-0`
+
+Versions of tools used:
+
+- bloom version: `0.5.26`
+- catkin_pkg version: `0.3.1`
+- rosdep version: `0.11.5`
+- rosdistro version: `0.6.2`
+- vcstools version: `0.1.39`
+
+
 ## rotors_simulator (indigo) - 2.1.1-0
 
 The packages in the `rotors_simulator` repository were released into the `indigo` distro by running `/usr/bin/bloom-release --rosdistro indigo --track indigo rotors_simulator --edit` on `Thu, 27 Apr 2017 21:06:10 -0000`
