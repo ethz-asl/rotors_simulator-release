@@ -1,0 +1,12 @@
+Source: ros-jade-rotors-control
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin, ros-jade-cmake-modules, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-nav-msgs, ros-jade-roscpp, ros-jade-sensor-msgs
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rotors-control
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-dynamic-reconfigure, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-nav-msgs, ros-jade-roscpp, ros-jade-sensor-msgs
+Description: RotorS control package
