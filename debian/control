@@ -1,0 +1,12 @@
+Source: ros-jade-rotors-hil-interface
+Section: misc
+Priority: extra
+Maintainer: Pavel Vechersky <pvechersky@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin, ros-jade-cmake-modules, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-mavros, ros-jade-mavros-msgs, ros-jade-roscpp, ros-jade-sensor-msgs
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rotors-hil-interface
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-mavros, ros-jade-mavros-msgs, ros-jade-roscpp, ros-jade-sensor-msgs
+Description: RotorS Hardware-in-the-loop interface package
