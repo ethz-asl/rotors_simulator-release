@@ -1,0 +1,12 @@
+Source: ros-jade-rotors-joy-interface
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-roscpp, ros-jade-sensor-msgs, ros-jade-trajectory-msgs
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rotors-joy-interface
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-roscpp, ros-jade-sensor-msgs, ros-jade-trajectory-msgs
+Description: The rotors_joy_interface package to control MAVs with a joystick
