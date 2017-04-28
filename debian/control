@@ -1,0 +1,12 @@
+Source: ros-jade-rotors-simulator
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rotors-simulator
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-rotors-comm, ros-jade-rotors-control, ros-jade-rotors-description, ros-jade-rotors-evaluation, ros-jade-rotors-gazebo, ros-jade-rotors-gazebo-plugins, ros-jade-rotors-hil-interface, ros-jade-rotors-joy-interface, ros-jade-rqt-rotors
+Description: RotorS is a MAV gazebo simulator.
