@@ -1,0 +1,12 @@
+Source: ros-jade-rotors-gazebo-plugins
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), libgazebo5-dev, libprotobuf-dev, libprotoc-dev, libyaml-cpp-dev, protobuf-compiler, ros-jade-catkin, ros-jade-cmake-modules, ros-jade-cv-bridge, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-octomap, ros-jade-octomap-msgs, ros-jade-octomap-ros, ros-jade-rosbag, ros-jade-roscpp, ros-jade-rotors-comm, ros-jade-rotors-control, ros-jade-std-srvs, ros-jade-tf
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-jade-rotors-gazebo-plugins
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgazebo5-dev, libyaml-cpp-dev, ros-jade-cv-bridge, ros-jade-gazebo-ros, ros-jade-geometry-msgs, ros-jade-mav-msgs, ros-jade-octomap, ros-jade-octomap-msgs, ros-jade-octomap-ros, ros-jade-rosbag, ros-jade-roscpp, ros-jade-rotors-comm, ros-jade-rotors-control, ros-jade-std-srvs, ros-jade-tf
+Description: The rotors_gazebo_plugins package
