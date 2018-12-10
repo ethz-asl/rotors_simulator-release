@@ -54,8 +54,10 @@ static constexpr double kDefaultWindGustDuration = 0.0;
 static constexpr double kDefaultWindSpeedMean = 0.0;
 static constexpr double kDefaultWindSpeedVariance = 0.0;
 
-static const math::Vector3 kDefaultWindDirection = math::Vector3(1, 0, 0);
-static const math::Vector3 kDefaultWindGustDirection = math::Vector3(0, 1, 0);
+static const ignition::math::Vector3d kDefaultWindDirection = ignition::math::Vector3d (1, 0, 0);
+static const ignition::math::Vector3d kDefaultWindGustDirection = ignition::math::Vector3d (0, 1, 0);
+
+static constexpr bool kDefaultUseCustomStaticWindField = false;
 
 
 
@@ -77,6 +79,7 @@ class GazeboWindPlugin : public ModelPlugin {
         wind_speed_variance_(kDefaultWindSpeedVariance),
         wind_direction_(kDefaultWindDirection),
         wind_gust_direction_(kDefaultWindGustDirection),
+        use_custom_static_wind_field_(kDefaultUseCustomStaticWindField),
         frame_id_(kDefaultFrameId),
         link_name_(kDefaultLinkName),
         node_handle_(nullptr),
@@ -128,13 +131,64 @@ class GazeboWindPlugin : public ModelPlugin {
   double wind_speed_mean_;
   double wind_speed_variance_;
 
-  math::Vector3 xyz_offset_;
-  math::Vector3 wind_direction_;
-  math::Vector3 wind_gust_direction_;
+  ignition::math::Vector3d xyz_offset_;
+  ignition::math::Vector3d wind_direction_;
+  ignition::math::Vector3d wind_gust_direction_;
 
   common::Time wind_gust_end_;
   common::Time wind_gust_start_;
 
+  /// \brief    Variables for custom wind field generation.
+  bool use_custom_static_wind_field_;
+  float min_x_;
+  float min_y_;
+  int n_x_;
+  int n_y_;
+  float res_x_;
+  float res_y_;
+  std::vector<float> vertical_spacing_factors_;
+  std::vector<float> bottom_z_;
+  std::vector<float> top_z_;
+  std::vector<float> u_;
+  std::vector<float> v_;
+  std::vector<float> w_;
+  
+  /// \brief  Reads wind data from a text file and saves it.
+  /// \param[in] custom_wind_field_path Path to the wind field from ~/.ros.
+  void ReadCustomWindField(std::string& custom_wind_field_path);
+  
+  /// \brief  Functions for trilinear interpolation of wind field at aircraft position.
+  
+  /// \brief  Linear interpolation
+  /// \param[in]  position y-coordinate of the target point.
+  ///             values Pointer to an array of size 2 containing the wind values
+  ///                    of the two points to interpolate from (12 and 13).
+  ///             points Pointer to an array of size 2 containing the y-coordinate 
+  ///                    of the two points to interpolate from.
+  ignition::math::Vector3d LinearInterpolation(double position, ignition::math::Vector3d * values, double* points) const;
+  
+  /// \brief  Bilinear interpolation
+  /// \param[in]  position Pointer to an array of size 2 containing the x- and 
+  ///                      y-coordinates of the target point.
+  ///             values Pointer to an array of size 4 containing the wind values 
+  ///                    of the four points to interpolate from (8, 9, 10 and 11).
+  ///             points Pointer to an array of size 14 containing the z-coordinate
+  ///                    of the eight points to interpolate from, the x-coordinate 
+  ///                    of the four intermediate points (8, 9, 10 and 11), and the 
+  ///                    y-coordinate of the last two intermediate points (12 and 13).
+  ignition::math::Vector3d BilinearInterpolation(double* position, ignition::math::Vector3d * values, double* points) const;
+  
+  /// \brief  Trilinear interpolation
+  /// \param[in]  link_position Vector3 containing the x, y and z-coordinates
+  ///                           of the target point.
+  ///             values Pointer to an array of size 8 containing the wind values of the 
+  ///                    eight points to interpolate from (0, 1, 2, 3, 4, 5, 6 and 7).
+  ///             points Pointer to an array of size 14 containing the z-coordinate          
+  ///                    of the eight points to interpolate from, the x-coordinate 
+  ///                    of the four intermediate points (8, 9, 10 and 11), and the 
+  ///                    y-coordinate of the last two intermediate points (12 and 13).
+  ignition::math::Vector3d TrilinearInterpolation(ignition::math::Vector3d link_position, ignition::math::Vector3d * values, double* points) const;
+  
   gazebo::transport::PublisherPtr wind_force_pub_;
   gazebo::transport::PublisherPtr wind_speed_pub_;
 
