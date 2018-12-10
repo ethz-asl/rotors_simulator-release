@@ -33,7 +33,7 @@
 #include <gazebo/common/Plugin.hh>
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
-#include "gazebo/math/Vector3.hh"
+#include "ignition/math/Vector3.hh"
 #include "gazebo/transport/transport.hh"
 #include "gazebo/msgs/msgs.hh"
 #include "common/mavlink.h"     // Either provided by ROS or as CMake argument MAVLINK_HEADER_DIR
@@ -74,7 +74,7 @@ class GazeboMavlinkInterface : public ModelPlugin {
   GazeboMavlinkInterface()
       : ModelPlugin(),
 
-        received_first_referenc_(false),
+        received_first_reference_(false),
         namespace_(kDefaultNamespace),
         motor_velocity_reference_pub_topic_(kDefaultMotorVelocityReferencePubTopic),
         imu_sub_topic_(kDefaultImuTopic),
@@ -108,7 +108,7 @@ class GazeboMavlinkInterface : public ModelPlugin {
 
  private:
 
-  bool received_first_referenc_;
+  bool received_first_reference_;
   Eigen::VectorXd input_reference_;
 
   std::string namespace_;
@@ -173,7 +173,7 @@ class GazeboMavlinkInterface : public ModelPlugin {
   std::string imu_sub_topic_;
   std::string lidar_sub_topic_;
   std::string opticalFlow_sub_topic_;
-  
+
   common::Time last_time_;
   common::Time last_gps_time_;
   common::Time last_actuator_time_;
@@ -182,9 +182,9 @@ class GazeboMavlinkInterface : public ModelPlugin {
   double lon_rad_;
   void handle_control(double _dt);
 
-  math::Vector3 gravity_W_;
-  math::Vector3 velocity_prev_W_;
-  math::Vector3 mag_d_;
+  ignition::math::Vector3d gravity_W_;
+  ignition::math::Vector3d velocity_prev_W_;
+  ignition::math::Vector3d mag_d_;
 
   std::default_random_engine random_generator_;
   std::normal_distribution<float> standard_normal_distribution_;
