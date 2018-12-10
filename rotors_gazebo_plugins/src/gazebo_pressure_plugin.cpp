@@ -29,7 +29,6 @@ GazeboPressurePlugin::GazeboPressurePlugin()
 }
 
 GazeboPressurePlugin::~GazeboPressurePlugin() {
-  event::Events::DisconnectWorldUpdateBegin(updateConnection_);
 }
 
 void GazeboPressurePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) {
@@ -75,6 +74,11 @@ void GazeboPressurePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf) 
   getSdfParam<std::string>(_sdf, "pressureTopic", pressure_topic_, kDefaultPressurePubTopic);
   getSdfParam<double>(_sdf, "referenceAltitude", ref_alt_, kDefaultRefAlt);
   getSdfParam<double>(_sdf, "pressureVariance", pressure_var_, kDefaultPressureVar);
+  CHECK(pressure_var_ >= 0.0);
+
+  // Initialize the normal distribution for pressure.
+  double mean = 0.0;
+  pressure_n_[0] = NormalDistribution(mean, sqrt(pressure_var_));
 
   // Listen to the update event. This event is broadcast every simulation
   // iteration.
@@ -99,10 +103,10 @@ void GazeboPressurePlugin::OnUpdate(const common::UpdateInfo& _info) {
     pubs_and_subs_created_ = true;
   }
 
-  common::Time current_time = world_->GetSimTime();
+  common::Time current_time = world_->SimTime();
 
   // Get the current geometric height.
-  double height_geometric_m = ref_alt_ + model_->GetWorldPose().pos.z;
+  double height_geometric_m = ref_alt_ + model_->WorldPose().Pos().Z();
 
   // Compute the geopotential height.
   double height_geopotential_m = kEarthRadiusMeters * height_geometric_m /
@@ -116,6 +120,11 @@ void GazeboPressurePlugin::OnUpdate(const common::UpdateInfo& _info) {
   double pressure_at_altitude_pascal =
       kPressureOneAtmospherePascals * exp(kAirConstantDimensionless *
           log(kSeaLevelTempKelvin / temperature_at_altitude_kelvin));
+
+  // Add noise to pressure measurement.
+  if(pressure_var_ > 0.0) {
+    pressure_at_altitude_pascal += pressure_n_[0](random_generator_);
+  }
 
   // Fill the pressure message.
   pressure_message_.mutable_header()->mutable_stamp()->set_sec(
