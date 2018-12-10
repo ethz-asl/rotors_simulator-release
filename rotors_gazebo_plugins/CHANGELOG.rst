@@ -2,8 +2,13 @@
 Changelog for package rotors_gazebo_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-3.0.0 (28.04.2017)
------------
+2.2.0 (2018-12-10)
+------------------
+* Major changes in CMakeLists and package definition for Gazebo version compatibility
+* Code updated to Gazebo9 API
+* Automatic backport script added for pre-9 compatibility
+* Added NoisyDepth Plugin
+* Contributors: Fadri Furrer, Helen Oleynikova, Michael Pantic, Mina Kamel, Nicolas El Hayek, Timo Hinzmann, Zachary Taylor, fmina, kajabo, michaelpantic, nelhayek, orangelynx, ptrkfry
 
 2.1.1 (2017-04-27)
 -----------
