@@ -2,6 +2,9 @@
 Changelog for package rotors_simulator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.2 (2018-12-12)
+------------------
+
 2.2.0 (2018-12-10)
 ------------------
 * change depend to exec_depend in meta package
