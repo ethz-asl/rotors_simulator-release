@@ -2,6 +2,9 @@
 Changelog for package rotors_joy_interface
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.2.2 (2018-12-12)
+------------------
+
 2.2.0 (2018-12-10)
 ------------------
 * Merge pull request `#397 <https://github.com/ethz-asl/rotors_simulator/issues/397>`_ from ethz-asl/v2.1.1
