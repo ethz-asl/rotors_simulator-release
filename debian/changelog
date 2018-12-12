@@ -1,0 +1,29 @@
+ros-indigo-rqt-rotors (2.2.2-0trusty) trusty; urgency=high
+
+
+
+ -- Pavel Vechersky <pavelv@student.ethz.ch>  Tue, 11 Dec 2018 23:00:00 -0000
+
+ros-indigo-rqt-rotors (2.2.0-0trusty) trusty; urgency=high
+
+  * switch to package format 2
+  * Merge pull request #411 <https://github.com/ethz-asl/rotors_simulator/issues/411> from ethz-asl/fix/hil_gui_element_access
+    Fixing GUI element access in rqt_rotors
+  * Fixing GUI element access in rqt_rotors
+  * Merge pull request #397 <https://github.com/ethz-asl/rotors_simulator/issues/397> from ethz-asl/v2.1.1
+    update to 2.1.1
+  * Merge pull request #398 <https://github.com/ethz-asl/rotors_simulator/issues/398> from ethz-asl/fix/rqt_rotors
+    Skip RQT rotors if mavros not found.
+  * Skip RQT rotors if mavros not found.
+  * Contributors: Fadri Furrer, Helen Oleynikova, Mina Kamel, Pavel Vechersky, pvechersky
+
+ -- Pavel Vechersky <pavelv@student.ethz.ch>  Sun, 09 Dec 2018 23:00:00 -0000
+
+ros-indigo-rqt-rotors (2.1.1-0trusty) trusty; urgency=high
+
+  * Update maintainers.
+  * Contributors: Timo Hinzmann
+
+ -- Pavel Vechersky <pavelv@student.ethz.ch>  Wed, 26 Apr 2017 22:00:00 -0000
+
+
