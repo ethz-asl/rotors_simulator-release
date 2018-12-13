@@ -22,7 +22,7 @@ tracks:
     ros_distro: indigo
     vcs_type: git
     vcs_uri: https://github.com/ethz-asl/rotors_simulator.git
-    version: 2.2.2
+    version: 2.2.3
   jade:
     actions:
     - bloom-export-upstream :{vcs_local_uri} :{vcs_type} --tag :{release_tag} --display-uri
