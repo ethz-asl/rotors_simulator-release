@@ -1,0 +1,12 @@
+Source: ros-melodic-rotors-gazebo
+Section: misc
+Priority: extra
+Maintainer: Fadri Furrer <fadri.furrer@mavt.ethz.ch>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin, ros-melodic-gazebo-msgs, ros-melodic-gazebo-plugins, ros-melodic-geometry-msgs, ros-melodic-joy, ros-melodic-mav-msgs, ros-melodic-roscpp, ros-melodic-rotors-gazebo-plugins, ros-melodic-sensor-msgs, ros-melodic-xacro
+Homepage: https://github.com/ethz-asl/rotors_simulator
+Standards-Version: 3.9.2
+
+Package: ros-melodic-rotors-gazebo
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-gazebo-msgs, ros-melodic-gazebo-plugins, ros-melodic-geometry-msgs, ros-melodic-joy, ros-melodic-mav-msgs, ros-melodic-roscpp, ros-melodic-rotors-gazebo-plugins, ros-melodic-sensor-msgs, ros-melodic-xacro
+Description: The rotors_gazebo package
