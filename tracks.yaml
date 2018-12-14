@@ -60,7 +60,7 @@ tracks:
       -i :{release_inc} --os-name debian --os-not-required
     - git-bloom-generate -y rosrpm --prefix release/:{ros_distro} :{ros_distro} -i
       :{release_inc}
-    devel_branch: null
+    devel_branch: feature/gazebo9-autobackport
     last_version: 2.2.2
     name: upstream
     patches: null
@@ -70,4 +70,4 @@ tracks:
     ros_distro: melodic
     vcs_type: git
     vcs_uri: https://github.com/ethz-asl/rotors_simulator.git
-    version: 2.2.2
+    version: 2.2.3
